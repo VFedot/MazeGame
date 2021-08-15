@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-   / <canvas id="MyCanvas">Sorry,your browser doesn't support canvas<canvas>
+<body onload="drawer.init()">
+    <button onClick="drawer.initGrid()" >Adjust Whiteboard</button>
+    <br>
+<canvas id="MyCanvas" onload="drawer.initGrid()">Sorry,your browser doesn't support canvas<canvas>
 </body>
 </html>
 <script src="js/script.js"></script>
