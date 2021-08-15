@@ -1,6 +1,7 @@
 const drawer = (function (context) {
   context.init = function () {
     context.mazeArray = [
+      //Game array init
       [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
       [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -12,9 +13,8 @@ const drawer = (function (context) {
       [0, 0, 1, 1, 1, 1, 0, 1, 1, 1],
       [0, 0, 0, 0, 0, 1, 1, 1, 0, 1],
     ];
-    context.charXCurrHeroPosition = 0;
-    context.charYCurrHeroPosition = 0;
-    context.offsetX = 0;
+    context.charXCurrHeroPosition = 0; //Current Hero possition by X
+    context.charYCurrHeroPosition = 0; //Current Hero possition by Y
     context.canvas = document.getElementById("MyCanvas"); // getting canvas
     canvas.width = 600; //our enitial canvas width in px
     canvas.height = 600; //our enitial canvas height in px
@@ -24,22 +24,24 @@ const drawer = (function (context) {
     context.ctx = canvas.getContext("2d"); //getting 2d context of canvas
   };
   context.initGrid = function () {
-    console.log(context.charXCurrHeroPosition);
+    //Initiating game grid(maze)
     for (let i = 0; i < context.mazeArray.length; i++) {
       for (let j = 0; j < context.mazeArray[i].length; j++) {
         let mazeElement = context.mazeArray[i][j];
         if (mazeElement === 0) {
+          //If maze element = 0 then yellow color,else black
           ctx.fillStyle = "yellow";
         } else {
           ctx.fillStyle = "black";
         }
         if (
+          //If maze element matches the Hero possition,then color = green
           i == context.charXCurrHeroPosition &&
           j == context.charYCurrHeroPosition
         ) {
           ctx.fillStyle = "green";
         }
-        drawRectangle(i, j, squareSize);
+        drawRectangle(i, j, squareSize); //redraw rectangle
       }
     }
   };
@@ -51,6 +53,7 @@ const drawer = (function (context) {
   };
 
   window.onkeypress = function (e) {
+    //Movement functionality
     var key = e.key;
     switch (key) {
       case "w": {
@@ -64,8 +67,8 @@ const drawer = (function (context) {
           )
         ) {
           charYCurrHeroPosition--;
-          context.initGrid();
-          checIfWins();
+          context.initGrid(); //Refresh the grid
+          checIfWins(); //Checks if player wins
         }
         break;
       }
@@ -80,8 +83,8 @@ const drawer = (function (context) {
           )
         ) {
           charXCurrHeroPosition--;
-          context.initGrid();
-          context.checIfWins();
+          context.initGrid(); //Refresh the grid
+          checIfWins(); //Checks if player wins
         }
         break;
       }
@@ -96,8 +99,8 @@ const drawer = (function (context) {
           )
         ) {
           context.charYCurrHeroPosition++;
-          context.initGrid();
-          context.checIfWins();
+          context.initGrid(); //Refresh the grid
+          checIfWins(); //Checks if player wins
         }
         break;
       }
@@ -112,8 +115,8 @@ const drawer = (function (context) {
           )
         ) {
           context.charXCurrHeroPosition++;
-          context.initGrid();
-          context.checIfWins();
+          context.initGrid(); //Refresh the grid
+          checIfWins(); //Checks if player wins
         }
         break;
       }
@@ -121,13 +124,14 @@ const drawer = (function (context) {
   };
 
   context.checkWalls = function (x, y) {
+    //checking if the next move will contain wall(maze element wiht index =1)
     return context.mazeArray[x][y] == 1;
   };
 
   context,
     (checIfWins = function () {
-      let winningXCondition = 9;
-      let winningYCondition = 9;
+      let winningXCondition = 9; //winnign tile by X
+      let winningYCondition = 9; //winning tile by Y
       if (
         context.charXCurrHeroPosition == winningXCondition &&
         context.charYCurrHeroPosition == winningYCondition
